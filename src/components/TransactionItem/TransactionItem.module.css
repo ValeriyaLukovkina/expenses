@@ -1,0 +1,37 @@
+.item {
+  padding: 8px;
+
+  background-color: rgb(236, 230, 230);
+  border-radius: 12px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  flex-basis: 50%;
+  gap: 8px;
+}
+
+.iconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.amount {
+  margin-left: auto;
+}

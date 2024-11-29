@@ -6,7 +6,7 @@ import { LoginSchema } from '@/Schemas';
 
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { connectToDatabase } from '@/lib/mongooseDB';
+import { connectDB } from '@/lib/mongooseDB';
 
 export type LoginFormType = z.infer<typeof LoginSchema>;
 
@@ -25,7 +25,7 @@ export const login = async (formData: LoginFormType) => {
   const { email, password } = validatedFields.data;
 
   try {
-    await connectToDatabase();
+    await connectDB();
 
     await signIn('credentials', { email, password, redirect: false });
 

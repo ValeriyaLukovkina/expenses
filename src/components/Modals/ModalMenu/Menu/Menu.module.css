@@ -1,0 +1,16 @@
+.menu {
+    padding: 8px;
+}
+
+.item {
+  display: block;
+  padding: 8px 0;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #0070f3;
+  }
+}

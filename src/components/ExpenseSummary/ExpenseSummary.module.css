@@ -1,0 +1,18 @@
+.wrapper {
+  padding: 16px;
+  background-color: rgb(236, 230, 230);
+  border-radius: 12px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.buttonTabs {
+  justify-content: center;
+}
+
+.timePeriod {
+  margin-top: 8px;
+}
+
+.expenseChart {
+  margin-top: 8px;
+}

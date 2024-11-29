@@ -2,7 +2,7 @@ import IconFood from '../icons/food.svg';
 import IconTravel from '../icons/travel.svg';
 import IconHealth from '../icons/health.svg';
 
-import type { IIcon, IUser } from '../types/Expenses';
+import type { IIcon, IUserDB } from '../types/Expenses';
 
 export const icons: Record<string, IIcon> = {
   groceries: { name: 'Groceries', Component: IconFood },
@@ -10,7 +10,7 @@ export const icons: Record<string, IIcon> = {
   health: { name: 'Health', Component: IconHealth },
 };
 
-export const user: IUser = {
+export const user: IUserDB = {
   name: 'Иван',
   email: 'P3M4f@example.com',
   password: '123123',

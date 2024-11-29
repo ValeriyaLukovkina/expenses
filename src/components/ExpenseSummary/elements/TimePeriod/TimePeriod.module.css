@@ -1,0 +1,27 @@
+.timePeriod {
+  position: relative;
+  text-align: center;
+}
+
+.text {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  background: url(./arrow.svg) no-repeat;
+}
+
+.arrowLeft {
+  left: 8px;
+  transform: rotate(180deg) translateY(50%);
+}
+
+.arrowRight {
+  right: 8px;
+}

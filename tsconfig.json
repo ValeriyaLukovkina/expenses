@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "svgr.d.ts"
-  ],
+, "src/lib/mongoDB.ts"  ],
   "exclude": ["node_modules"]
 }

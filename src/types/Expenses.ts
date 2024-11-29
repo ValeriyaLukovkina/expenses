@@ -8,7 +8,10 @@ export interface IOriginalAmount {
 export interface IUser {
   name: string;
   email: string;
-  password: string;
+}
+
+export interface IUserDB extends IUser {
+  password?: string;
   categories: ICategory[];
   expenses: IExpense[];
 }

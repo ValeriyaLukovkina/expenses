@@ -8,10 +8,9 @@ if (!MONGODB_URI) {
 
 let isConnected = false;
 
-export async function connectToDatabase() {
+export async function connectDB() {
   if (isConnected) {
     console.log('✅ Reusing existing MongoDB connection');
-    return mongoose.connection.getClient();
   };
 
   try {
@@ -19,7 +18,6 @@ export async function connectToDatabase() {
 
     isConnected = db.connections[0].readyState === 1;
     console.log('✅ Подключено к MongoDB через Mongoose');
-    return mongoose.connection.getClient();
   } catch (error) {
     console.error('❌ Ошибка подключения к MongoDB:', error);
     throw error;

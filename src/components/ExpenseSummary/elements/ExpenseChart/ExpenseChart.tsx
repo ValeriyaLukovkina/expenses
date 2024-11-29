@@ -1,21 +1,26 @@
-'use client';
 import { useMemo } from 'react';
+import cn from 'classnames';
 
 import categoriesStore from '@/store/categoriesStore';
 import expensesStore from '@/store/expensesStore';
 import dateStore from '@/store/dateStore';
-import { ICategoryExpense, calculateCategoryStats } from '@/app/_utils/calculateCategoryStats';
 import { filterExpensesByPeriod } from '@/app/_utils/filteredExpensesByPeriod';
 import { getExpensesSum } from '@/app/_utils/getExpensesSum';
-import Header from '@/components/Header/Header';
-import ExpenseSummary from '@/components/ExpenseSummary/ExpenseSummary';
-import List from '@/components/UI/List/List';
-import TransactionItem from '@/components/TransactionItem/TransactionItem';
-import styles from './page.module.css';
+import { calculateCategoryStats } from '@/app/_utils/calculateCategoryStats';
+import CircleChart from '@/components/UI/CircleChart/CircleChart';
+import styles from './ExpenseChart.module.css';
 
+import type { FC } from 'react';
 import type { Dayjs } from 'dayjs';
+import type { ICategoryExpense } from '@/app/_utils/calculateCategoryStats';
 
-const Main = () => {
+interface ExpenseChartProps {
+  className?: string;
+}
+
+const ExpenseChart: FC<ExpenseChartProps> = (props) => {
+  const { className } = props;
+
   const { categories } = categoriesStore();
   const { expenses } = expensesStore();
   const { selectPeriod, selectDate } = dateStore();
@@ -53,21 +58,10 @@ const Main = () => {
   }, [categories, expenses, selectDate, selectPeriod]);
 
   return (
-    <div>
-      <Header name='main' additional={<div>111</div>} />
-      <div className={styles.expenseSummary}>
-        <ExpenseSummary />
-      </div>
-
-      <List className={styles.list} view='splitted'>
-        {сategoryExpenses.map((category) => {
-          if (category.total > 0) {
-            return <TransactionItem key={category.id} category={category} />;
-          }
-        })}
-      </List>
+    <div className={cn(styles.timePeriod, className)}>
+      <CircleChart data={сategoryExpenses} />
     </div>
   );
 };
 
-export default Main;
+export default ExpenseChart;

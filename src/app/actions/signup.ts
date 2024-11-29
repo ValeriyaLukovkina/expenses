@@ -3,11 +3,11 @@
 import * as z from 'zod';
 import bcrypt from 'bcrypt';
 
-import { connectToDatabase } from '@/lib/mongooseDB';
+import { connectDB } from '@/lib/mongooseDB';
 import { SignupSchema } from '@/Schemas';
 import User from '../../Model/User';
 
-import type { IUser } from '@/types/Expenses';
+import type { IUserDB } from '@/types/Expenses';
 import { getUserByEmail } from '@/data/user';
 
 export type SignupFormType = z.infer<typeof SignupSchema>;
@@ -58,7 +58,7 @@ export const signup = async (formData: SignupFormType) => {
   }
 
   try {
-    await connectToDatabase();
+    await connectDB();
 
     const { name, email, password } = validatedFields.data;
 
@@ -69,7 +69,7 @@ export const signup = async (formData: SignupFormType) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User<IUser>({
+    const newUser = new User<IUserDB>({
       name,
       email,
       password: hashedPassword,
