@@ -1,21 +1,38 @@
-import MainClient from "@/components/MainClient/MainClient";
-import { getUser } from "./actions/getUser";
-import "./globals.css";
+import { headers } from 'next/headers';
+
+import MainClient from '@/components/MainClient/MainClient';
+
+import './globals.css';
+import { IUserDB } from '@/types/Expenses';
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getUser();
-  console.log(user);
+  const headersList = await headers();
+
+  const user: IUserDB = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user`, {
+    method: 'GET',
+    headers: {
+      cookie: headersList.get('cookie') || '',
+    },
+
+    credentials: 'include',
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return null;
+  });
 
   return (
-    <html lang="en">
+    <html lang='en'>
       <body>
-        <MainClient user={user}/>
+        <MainClient user={user} />
         {children}
-        <div id="modal-root"></div>
+        <div id='modal-root'></div>
       </body>
     </html>
   );

@@ -16,32 +16,32 @@ const defaultCategories = [
   {
     id: 'health',
     name: 'Health',
-    iconId: 'health',
-    color: '#FF5722',
+    iconId: 'heart',
+    color: '#E91E63',
   },
   {
     id: 'groceries',
     name: 'Groceries',
-    iconId: 'groceries',
+    iconId: 'flatware',
     color: '#4CAF50',
   },
   {
     id: 'home',
     name: 'Home',
-    iconId: 'travel',
-    color: '#FF5722',
+    iconId: 'home',
+    color: '#03A9F4',
   },
   {
     id: 'restaurant',
     name: 'Restaurant',
-    iconId: 'health',
-    color: '#FF5722',
+    iconId: 'flatware',
+    color: '#FF9800',
   },
   {
-    id: 'education',
-    name: 'Education',
-    iconId: 'health',
-    color: '#FF5722',
+    id: 'travel',
+    name: 'Travel',
+    iconId: 'plane',
+    color: '#00BCD4',
   },
 ];
 

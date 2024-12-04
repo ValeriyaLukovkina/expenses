@@ -12,7 +12,6 @@ import type { LoginFormType } from '@/app/actions/login';
 const Login = () => {
   const [formData, setFormData] = useState<LoginFormType>({ email: '', password: '' });
   const [errors, setErrors] = useState<Partial<Record<keyof LoginFormType, string>> | null>(null);
-  const [user, setuser] = useState();
   const [isPending, startTransition] = useTransition();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -2,11 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { connectDB } from '@/lib/mongooseDB';
 import User from '@/Model/User';
-import { ensureSession } from '../_utils/ensureSession';
+import { ensureSession } from '../../_utils/ensureSession';
 
-import type { IUserDB } from '@/types/Expenses';
+import type { UpdateWriteOpResult } from 'mongoose';
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function DELETE(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+
+  const categoryId = searchParams.get('id');
+
+  if (!categoryId) {
+    return NextResponse.json({ message: 'ID is required' }, { status: 400 });
+  }
+
   try {
     const session = await ensureSession();
     await connectDB();
@@ -16,15 +24,17 @@ export async function GET(req: NextRequest, res: NextResponse) {
     }
 
     const email: string = session.user.email;
-    const user: IUserDB | null = await User.findOne({ email })
-      .select('-categories._id -_id -password -__v')
-      .lean<IUserDB>();
 
-    if (!user) {
+    const result: UpdateWriteOpResult = await User.updateOne(
+      { email },
+      { $pull: { categories: { id: categoryId } } },
+    );
+
+    if (result.matchedCount === 0) {
       return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
-    return NextResponse.json(user , { status: 200 });
+    return NextResponse.json({ message: 'Categories deleted successfully' }, { status: 200 });
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ message: error.message }, { status: 401 });

@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  background-color: lightgrey;
+
+  padding: 10px 15px;
+}
+
+.backButton {
+  position: relative;
+  border: none;
+  background: transparent;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+}

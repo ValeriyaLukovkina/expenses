@@ -19,7 +19,6 @@ const Signup = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    console.log(formData);
 
     setErrors((prev) => ({ ...prev, [name]: undefined }));
   };

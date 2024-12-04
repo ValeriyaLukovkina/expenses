@@ -1,31 +1,46 @@
-"use client"
+'use client';
 
-import cn from "classnames";
+import cn from 'classnames';
+
+import { icons } from '@/data/expenses';
 import styles from './CategoryCard.module.css';
 
-import type { CSSProperties, FC } from "react";
-import { ICategory } from "@/types/Expenses";
-import { icons } from "@/data/expenses";
+import { useCallback, type CSSProperties, type FC } from 'react';
 
 interface CategoryCardProps {
   className?: string;
-  category: ICategory;
+  iconId: string;
+  color?: string;
+  name?: string;
   active?: boolean;
+  view?: 'default' | 'filled';
 }
 
 const CategoryCard: FC<CategoryCardProps> = (props) => {
-  const { category, active, className, ...restProps }  = props;
+  const { iconId, color, name, active, view = 'default', className, ...restProps } = props;
 
-  const IconComponent = icons[category.iconId]?.Component; 
+  const IconComponent = icons[iconId]?.Component;
 
   return (
-    <div style={{'--color': category.color} as CSSProperties} className={cn(styles.category,{[styles.active]: true}, className)} {...restProps}>
+    <div
+      style={{ '--color': color } as CSSProperties}
+      className={cn(
+        styles.category,
+        {
+          [styles.active]: active,
+          [styles.viewFilled]: view === 'filled',
+          [styles.viewDefault]: view === 'default',
+        },
+        className,
+      )}
+      {...restProps}
+    >
       <div className={styles.iconWrapper}>
-        <IconComponent className={styles.icon}/>
+        <IconComponent className={styles.icon} />
       </div>
-      <div className={styles.name}>{category.name}</div>
+      {name && <div className={styles.name}>{name}</div>}
     </div>
   );
-}
+};
 
-export default CategoryCard
+export default CategoryCard;

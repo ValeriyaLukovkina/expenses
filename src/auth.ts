@@ -34,7 +34,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const isPasswordValid = await bcrypt.compare(password, user.password);
 
           if (!isPasswordValid) {
-            console.log('Invalid credentials');
             throw new Error('Invalid credentials.');
           }
 

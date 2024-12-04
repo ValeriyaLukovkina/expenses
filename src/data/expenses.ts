@@ -1,13 +1,33 @@
-import IconFood from '../icons/food.svg';
-import IconTravel from '../icons/travel.svg';
-import IconHealth from '../icons/health.svg';
+import IconCroissant from '../icons/IconCroissant/IconCroissant';
+import IconBall from '../icons/IconBall/IconBall';
+import IconBike from '../icons/IconBike/IconBike';
+import IconClothes from '../icons/IconClothes/IconClothes';
+import IconExercise from '../icons/IconExercise/IconExercise';
+import IconFlatware from '../icons/IconFlatware/IconFlatware';
+import IconGamepad from '../icons/IconGamepad/IconGamepad';
+import IconGift from '../icons/IconGift/IconGift';
+import IconGrocery from '../icons/IconGrocery/IconGrocery';
+import IconHeart from '../icons/IconHeart/IconHeart';
+import IconHome from '../icons/IconHome/IconHome';
+import IconPlane from '../icons/IconPlane/IconPlane';
+import IconStart from '../icons/IconStart/IconStart';
 
 import type { IIcon, IUserDB } from '../types/Expenses';
 
 export const icons: Record<string, IIcon> = {
-  groceries: { name: 'Groceries', Component: IconFood },
-  travel: { name: 'Travel', Component: IconTravel },
-  health: { name: 'Health', Component: IconHealth },
+  croissant: { name: 'croissant', Component: IconCroissant },
+  ball: { name: 'ball', Component: IconBall },
+  bike: { name: 'bike', Component: IconBike },
+  clothes: { name: 'clothes', Component: IconClothes },
+  exersize: { name: 'exersize', Component: IconExercise },
+  flatware: { name: 'flatware', Component: IconFlatware },
+  gamepad: { name: 'gamepad', Component: IconGamepad },
+  gift: { name: 'gift', Component: IconGift },
+  grocery: { name: 'grocery', Component: IconGrocery },
+  heart: { name: 'heart', Component: IconHeart },
+  home: { name: 'home', Component: IconHome },
+  plane: { name: 'plane', Component: IconPlane },
+  start: { name: 'start', Component: IconStart },
 };
 
 export const user: IUserDB = {

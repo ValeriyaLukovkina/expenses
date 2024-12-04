@@ -7,6 +7,7 @@ import categoriesStore from '@/store/categoriesStore';
 import expensesStore from '@/store/expensesStore';
 import type { FC } from 'react';
 import type { IUserDB } from '@/types/Expenses';
+import User from '@/Model/User';
 
 interface MainClientProps {
   user: IUserDB;
@@ -20,6 +21,10 @@ const MainClient: FC<MainClientProps> = (props) => {
   const setExpenses = expensesStore((state) => state.setExpenses);
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
+    
     const userData = {
       name: user.name,
       email: user.email,

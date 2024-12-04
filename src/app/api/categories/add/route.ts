@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { connectDB } from '@/lib/mongooseDB';
 import User from '@/Model/User';
-import { ensureSession } from '../_utils/ensureSession';
+import { ensureSession } from '../../_utils/ensureSession';
 
-import type { IUserDB } from '@/types/Expenses';
+import type { UpdateWriteOpResult } from 'mongoose';
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const session = await ensureSession();
     await connectDB();
@@ -16,15 +16,26 @@ export async function GET(req: NextRequest, res: NextResponse) {
     }
 
     const email: string = session.user.email;
-    const user: IUserDB | null = await User.findOne({ email })
-      .select('-categories._id -_id -password -__v')
-      .lean<IUserDB>();
+    const body = await req.json();
 
-    if (!user) {
+
+    if (!body.categories) {
+      return NextResponse.json(
+        { message: 'Categories must not be null or undefined' },
+        { status: 400 },
+      );
+    }
+
+    const result: UpdateWriteOpResult = await User.updateOne(
+      { email },
+      { $push: { categories: body.categories } },
+    );
+
+    if (result.matchedCount === 0) {
       return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
-    return NextResponse.json(user , { status: 200 });
+    return NextResponse.json({ message: 'Categories updated successfully' }, { status: 200 });
   } catch (error: any) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ message: error.message }, { status: 401 });
