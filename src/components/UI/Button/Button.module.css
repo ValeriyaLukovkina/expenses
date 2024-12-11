@@ -1,13 +1,12 @@
 .button {
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  height: 42px;
 
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.5;
+  overflow: hidden;
 
   border: 0;
   outline: 0;
@@ -18,27 +17,92 @@
   }
 }
 
-.button.sizeL {
-  height: 50px;
+.sizeS {
+  height: var(--space-8);
+  padding: 0 var(--space-3);
+  font-size: var(--size-xs);
+  line-height: 1.5;
 }
 
-.button.sizeM {
-  height: 42px;
+.sizeM {
+  height: var(--space-10);
+  padding: 0 var(--space-4);
+  font-size: var(--size-s);
+  line-height: 1.5;
 }
 
-.button.sizeS {
-  height: 35px;
+.sizeL {
+  height: var(--space-12);
+  padding: 0 var(--space-6);
+  font-size: var(--size-m);
+  line-height: 1.5;
 }
 
-.button.themeWhite {
-  color: #000000;
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 8px;
+.variantDefault {
+  background-color: var(--color-default);
+}
 
-  transition: all 0.2s;
+.variantBordered {
+  background-color: transparent;
+  border: 2px solid var(--color-default);
+}
+
+.variantFaded {
+  background-color: var(--color-default-100);
+  border: 2px solid var(--color-default);
+}
+
+.variantLight {
+  color: var(--color-foreground);
+  background-color: var(--color-background);
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--color-default-100);
   }
+}
+
+.variantReversed {
+  color: var(--color-background);
+  background-color: var(--color-foreground);
+}
+
+.ripple {
+  position: absolute;
+  background-color: var(--color-default-100);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-effect 1s ease-out;
+  pointer-events: none;
+  transform: scale(0);
+}
+
+@keyframes ripple-effect {
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.radiusS {
+  border-radius: 8px;
+}
+
+.radiusM {
+  border-radius: 12px;
+}
+
+.radiusL {
+  border-radius: 14px;
+}
+
+.radiusRound {
+  border-radius: 9999px;
+}
+
+.radiusCircle {
+  border-radius: 50%;
+}
+
+.fullWidth {
+  width: 100%;
 }

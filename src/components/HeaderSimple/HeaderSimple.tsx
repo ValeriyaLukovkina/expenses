@@ -1,9 +1,11 @@
 'use client';
 
-import type { FC } from 'react';
-import styles from './HeaderSimple.module.css';
 import { useRouter } from 'next/navigation';
-import IconArrow from '@/icons/IconArrow';
+
+import IconArrow from '@/icons/IconArrow/IconArrow';
+import styles from './HeaderSimple.module.css';
+
+import type { FC } from 'react';
 
 interface HeaderSimpleProps {
   name: string;

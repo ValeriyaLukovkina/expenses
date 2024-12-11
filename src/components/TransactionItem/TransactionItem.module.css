@@ -1,20 +1,23 @@
 .item {
-  padding: 8px;
+  padding: var(--space-2);
 
-  background-color: rgb(236, 230, 230);
+  background-color: var(--color-default-50);
   border-radius: 12px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
+
+  color: var(--color-foreground);
+  font-size: var(--size-s);
 }
 
 .category {
   display: flex;
   align-items: center;
   flex-basis: 50%;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .iconWrapper {

@@ -9,12 +9,14 @@ import { createCategory } from '@/app/actions/category/createCategory';
 import { editCategory } from '@/app/actions/category/editCategory';
 import CategoryCard from '@/components/CategoryCard/CategoryCard';
 import Button from '@/components/UI/Button/Button';
-import Input from '@/components/UI/Input/Input';
 import styles from './CategoryForm.module.css';
 
 import type { FC } from 'react';
 import type { CategorySchema } from '@/Schemas';
 import type { ICategory } from '@/types/Expenses';
+import Input from '@/components/UI/Input/Input';
+import userStore from '@/store/userStore';
+import { useRouter } from 'next/navigation';
 
 export type CategoryFormType = z.infer<typeof CategorySchema>;
 
@@ -29,6 +31,8 @@ interface CategoryFormProps {
 
 const CategoryForm: FC<CategoryFormProps> = (props) => {
   const { categoryName, limit, iconId, color, id, action, ...restProps } = props;
+  const router = useRouter();
+
   const [formData, setFormData] = useState<{ limit: number; name: string }>({
     limit: limit || 0,
     name: categoryName || '',
@@ -41,7 +45,14 @@ const CategoryForm: FC<CategoryFormProps> = (props) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === 'limit') {
+      if (!/^\d*$/.test(value)) return;
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'limit' ? Number(value) || 0 : value,
+    }));
 
     setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
@@ -72,13 +83,21 @@ const CategoryForm: FC<CategoryFormProps> = (props) => {
     startTransition(async () => {
       if (action === 'create') {
         createCategory(fullFormData).then((res) => {
-          setErrors((prev) => ({ ...prev, ...res?.errors }));
+          if (res?.errors) {
+            setErrors((prev) => ({ ...prev, ...res?.errors }));
+          } else {
+            router.push('/categories');
+          }
         });
       }
 
       if (action === 'edit' && id) {
         editCategory(fullFormData, id).then((res) => {
-          setErrors((prev) => ({ ...prev, ...res?.errors }));
+          if (res?.errors) {
+            setErrors((prev) => ({ ...prev, ...res?.errors }));
+          } else {
+            router.push('/categories');
+          }
         });
       }
     });
@@ -91,24 +110,42 @@ const CategoryForm: FC<CategoryFormProps> = (props) => {
   }, [categoryName, limit, iconId, color]);
 
   return (
-    <form onSubmit={handleSubmit} {...restProps}>
-      <Input
-        id='name'
-        name='name'
-        placeholder='Category Name'
-        onChange={handleChange}
-        disabled={isPending}
-        value={formData.name}
-      />
-      <Input
-        id='limit'
-        name='limit'
-        placeholder='Limit'
-        onChange={handleChange}
-        disabled={isPending}
-        type='number'
-        value={formData.limit}
-      />
+    <form onSubmit={handleSubmit} className={styles.form} {...restProps}>
+      <div className={styles.name}>
+        <CategoryCard
+          iconId={selectIcon}
+          active={id === selectIcon}
+          color={selectColor ? selectColor : 'lightgray'}
+          size='s'
+        />
+        <Input
+          id='name'
+          name='name'
+          label='Category Name'
+          onChange={handleChange}
+          disabled={isPending}
+          value={formData.name}
+          variant='underlined'
+          size='l'
+          fullWidth
+          className={styles.input}
+        />
+      </div>
+      <div className={styles.limitWrapper}>
+        <Input
+          id='limit'
+          name='limit'
+          placeholder='Not selected'
+          label='Planned outlay'
+          onChange={handleChange}
+          disabled={isPending}
+          value={formData.limit}
+          variant='underlined'
+          labelPlacement='outside'
+          className={styles.inputLimit}
+        />
+        <div>USD per month</div>
+      </div>
       <div className={styles.iconsWrapper}>
         <div className={styles.title}>Icons</div>
         <div className={styles.icons}>
@@ -136,12 +173,9 @@ const CategoryForm: FC<CategoryFormProps> = (props) => {
           ))}
         </div>
       </div>
-      {errors?.name && <div>{errors.name}</div>}
-      {errors?.limit && <div>{errors.limit}</div>}
-      {errors?.id && <div>{errors.id}</div>}
-      {errors?.iconId && <div>{errors.iconId}</div>}
-      {errors?.color && <div>{errors.color}</div>}
-      <Button type='submit'>{action === 'create' ? 'Create' : 'Save'}</Button>
+      <Button variant='reversed' size='s' radius='round' type='submit' className={styles.button}>
+        {action === 'create' ? 'Create' : 'Save'}
+      </Button>
     </form>
   );
 };

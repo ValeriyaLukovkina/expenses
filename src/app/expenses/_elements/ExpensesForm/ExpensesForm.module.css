@@ -1,0 +1,33 @@
+.amount {
+  display: flex;
+  align-items: center;
+}
+
+.iconsWrapper,
+.datesWrapper {
+  margin-top: var(--space-3);
+}
+
+.title {
+  font-size: var(--size-s);
+  line-height: 1.5;
+  color: var(--color-default-600);
+
+  margin-bottom: var(--space-2);
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  gap: var(--space-1);
+}
+
+.button {
+  width: 150px;
+  text-align: center;
+
+  position: fixed;
+  bottom: var(--space-3);
+  left: calc(50% - 75px);
+}

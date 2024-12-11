@@ -1,6 +1,6 @@
 .viewSplitted {
   .item {
-    margin-top: 8px;
+    margin-top: var(--space-3);
 
     &:first-child {
       margin-top: 0;

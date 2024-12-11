@@ -54,18 +54,20 @@ const Main = () => {
 
   return (
     <div>
-      <Header name='main' additional={<div>111</div>} />
-      <div className={styles.expenseSummary}>
-        <ExpenseSummary />
-      </div>
+      <Header name='Main' additional={<div>111</div>} />
+      <div className={styles.content}>
+        <div className={styles.expenseSummary}>
+          <ExpenseSummary />
+        </div>
 
-      <List className={styles.list} view='splitted'>
-        {сategoryExpenses.map((category) => {
-          if (category.total > 0) {
-            return <TransactionItem key={category.id} category={category} />;
-          }
-        })}
-      </List>
+        <List className={styles.list} view='splitted'>
+          {сategoryExpenses.map((category) => {
+            if (category.total > 0) {
+              return <TransactionItem key={category.id} category={category} />;
+            }
+          })}
+        </List>
+      </div>
     </div>
   );
 };

@@ -2,11 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-2);
 
-  background-color: lightgrey;
+  background-color: var(--color-secondary-300);
 
-  padding: 10px 15px;
+  padding: var(--space-2) var(--space-3);
 }
 
 .menu {
@@ -24,7 +24,7 @@
     width: 100%;
     height: 4px;
     background-color: #000;
-    border-radius: 10px;
+    border-radius: 8px;
   }
 
   &::before {
@@ -35,4 +35,9 @@
   &::after {
     bottom: 0;
   }
+}
+
+.title {
+  font-size: var(--size-title);
+  line-height: 1.5;
 }

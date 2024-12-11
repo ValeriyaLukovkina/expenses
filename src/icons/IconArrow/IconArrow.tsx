@@ -17,8 +17,12 @@ const IconArrow: FC<IconArrowProps> = (props) => {
       {...props}
     >
       <path
-        d='M17.885 3.77L16.115 2L6.11499 12L16.115 22L17.885 20.23L9.65499 12L17.885 3.77Z'
-        fill='black'
+        d='M8.90997 19.92L15.43 13.4C16.2 12.63 16.2 11.37 15.43 10.6L8.90997 4.08002'
+        stroke='currentColor'
+        strokeWidth='1.5'
+        strokeMiterlimit='10'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );

@@ -77,8 +77,12 @@ export const signup = async (formData: SignupFormType) => {
       expenses: [],
     });
 
-    await newUser.save();
+    const savedUser = await newUser.save();
 
+    if (!savedUser) {
+      return { errors: { error: 'Something went wrong' } };
+    }
+    
     return null;
   } catch (error) {
     console.error('Error creating user:', error);

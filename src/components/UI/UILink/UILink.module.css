@@ -1,0 +1,75 @@
+.button {
+  color: var(--color-foreground);
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.animated {
+  padding-bottom: 2px;
+
+  background-image: linear-gradient(to bottom, transparent 20%, currentColor 21%);
+
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+
+  &:hover {
+    background-size: 100% 1px;
+
+    animation: underlineAnimation 0.5s ease-in-out;
+  }
+}
+
+.underlined {
+  padding-bottom: 2px;
+
+  background-image: linear-gradient(to bottom, transparent 20%, currentColor 21%);
+
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+
+  .animated {
+    animation: underlineAnimation 0.5s ease-in-out;
+  }
+}
+
+@keyframes underlineAnimation {
+  from {
+    background-size: 0% 1px;
+  }
+
+  to {
+    background-size: 100% 1px;
+  }
+}
+
+@keyframes underlineunderlinedAnimation {
+  from {
+    background-size: 100% 1px;
+  }
+  30% {
+    background-size: 0% 1px;
+  }
+  to {
+    background-size: 100% 1px;
+  }
+}
+
+.sizeS {
+  font-size: var(--size-xs);
+  line-height: 1.5;
+}
+
+.sizeM {
+  font-size: var(--size-s);
+  line-height: 1.5;
+}
+
+.sizeL {
+  font-size: var(--size-m);
+  line-height: 1.5;
+}

@@ -1,5 +1,8 @@
 import { authConfig } from './auth.config';
 import bcrypt from 'bcrypt';
+import Google from 'next-auth/providers/google';
+import Facebook from 'next-auth/providers/facebook';
+import Apple from 'next-auth/providers/apple';
 
 import NextAuth from 'next-auth';
 import credentials from 'next-auth/providers/credentials';
@@ -50,14 +53,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     jwt({ token, user }) {
-      if (user) { 
-        token.id = user.id
+      if (user) {
+        token.id = user.id;
       }
-      return token
+      return token;
     },
     session({ session, token }) {
-      session.user.id = token.id
-      return session
+      session.user.id = token.id;
+      return session;
     },
   },
 });

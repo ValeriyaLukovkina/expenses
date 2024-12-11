@@ -26,8 +26,6 @@ export async function PUT(req: NextRequest) {
     const email: string = session.user.email;
     const body = await req.json();
 
-    console.log(body);
-
     if (!body.updatedData) {
       return NextResponse.json(
         { message: 'Updated data must not be null or undefined' },

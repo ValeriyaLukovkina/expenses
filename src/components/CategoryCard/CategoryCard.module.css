@@ -1,18 +1,22 @@
 .category {
-  width: 60px;
-  padding: 5px;
-  border-radius: 10px;
+  padding: var(--space-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  border-radius: 8px;
+}
 
-  &.active {
+.active {
+  &.variantDefault {
+    background-color: var(--color-default-50);
+    box-shadow:
+      rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+      rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  }
+
+  &.variantFilled {
     background-color: var(--color);
-
-    &.viewDefault {
-      background-color: darkgray;
-    }
-
-    &.viewFilled {
-      background-color: var(--color);
-    }
   }
 }
 
@@ -20,8 +24,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   background-color: var(--color);
   border-radius: 50%;
 }
@@ -32,7 +36,23 @@
 }
 
 .name {
-  font-size: 12px;
+  margin-top: var(--space-1);
+  text-align: center;
+  font-size: var(--size-xs);
   overflow: hidden;
   white-space: nowrap;
+
+  color: var(--color-foreground);
+}
+
+.sizeS {
+  .iconWrapper {
+    width: 30px;
+    height: 30px;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
 }

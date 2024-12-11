@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState, useCallback, useEffect } from 'react';
+import { memo, useState, useCallback } from 'react';
 import cn from 'classnames';
 
 import styles from './ButtonTabs.module.css';

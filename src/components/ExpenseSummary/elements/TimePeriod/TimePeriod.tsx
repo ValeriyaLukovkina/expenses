@@ -3,6 +3,7 @@ import cn from 'classnames';
 
 import dateStore from '@/store/dateStore';
 import styles from './TimePeriod.module.css';
+import IconArrow from '@/icons/IconArrow/IconArrow';
 
 interface TimePeriodProps {
   className?: string;
@@ -39,9 +40,9 @@ const TimePeriod: FC<TimePeriodProps> = (props) => {
 
   return (
     <div className={cn(styles.timePeriod, className)}>
-      <span className={cn(styles.arrow, styles.arrowLeft)} onClick={goToPrevious}></span>
+      <IconArrow onClick={goToPrevious} className={cn(styles.arrow, styles.arrowLeft)} />
       <div className={styles.text}>{getFormattedPeriod()}</div>
-      <span className={cn(styles.arrow, styles.arrowRight)} onClick={goToNext}></span>
+      <IconArrow onClick={goToNext} className={cn(styles.arrow, styles.arrowRight)} />
     </div>
   );
 };

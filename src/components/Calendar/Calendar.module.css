@@ -1,0 +1,47 @@
+.wrapper {
+  margin: auto;
+  text-align: center;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  margin: var(--space-4) 0;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+
+  &.hidden {
+    visibility: hidden;
+  }
+}
+
+.iconLeft {
+  transform: rotate(180deg);
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-1);
+}
+
+.weekDay {
+  font-size: var(--size-s);
+}
+
+.day {
+  padding: var(--space-2);
+  text-align: center;
+  background-color: var(--color-background);
+
+  font-size: var(--size-s);
+  color: #000;
+  border-radius: 4px;
+
+  &.select {
+    background-color: #f0f0f0;
+  }
+}

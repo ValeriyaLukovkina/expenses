@@ -4,8 +4,9 @@
 }
 
 .text {
-    font-size: 14px;
-    line-height: 1.5;
+  font-size: var(--size-m);
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .arrow {
@@ -14,7 +15,6 @@
   width: 24px;
   height: 24px;
   transform: translateY(-50%);
-  background: url(./arrow.svg) no-repeat;
 }
 
 .arrowLeft {

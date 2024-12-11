@@ -38,8 +38,6 @@ export const editCategory = async (formData: CategoryFormType, id: string) => {
       }),
     });
 
-    console.log
-
     if (!response.ok) {
       return { errors: { error: 'Internal server error' } };
     }

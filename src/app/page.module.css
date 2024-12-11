@@ -1,0 +1,9 @@
+.content {
+  padding: var(--space-6) var(--space-2);
+
+  font-size: var(--size-m);
+}
+
+.list {
+  margin-top: var(--space-3);
+}

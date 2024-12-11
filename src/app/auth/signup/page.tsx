@@ -1,12 +1,19 @@
 'use client';
 
+import { useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
+
 import { SignupFormType, signup } from '@/app/actions/signup';
+import IconFacebook from '@/icons/IconFacebook/IconFacebook';
+import IconGoogle from '@/icons/IconGoogle/IconGoogle';
+import IconApple from '@/icons/IconApple/IconApple';
 import Button from '@/components/UI/Button/Button';
 import Input from '@/components/UI/Input/Input';
-import Link from 'next/link';
-import { useState, useTransition } from 'react';
+import UILink from '@/components/UI/UILink/UILink';
+import styles from './page.module.css';
 
 const Signup = () => {
+  const router = useRouter(); 
   const [formData, setFormData] = useState<SignupFormType>({
     name: '',
     email: '',
@@ -18,6 +25,7 @@ const Signup = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     setErrors((prev) => ({ ...prev, [name]: undefined }));
@@ -30,53 +38,107 @@ const Signup = () => {
 
     startTransition(() => {
       signup(formData).then((res) => {
-        setErrors((prev) => ({ ...prev, ...res?.errors }));
+        if (res?.errors) {
+          setErrors((prev) => ({ ...prev, ...res.errors }));
+        } else {
+          router.push('/auth/login');
+        }
       });
     });
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <Input
-          id='name'
-          name='name'
-          placeholder='name'
-          onChange={handleChange}
-          disabled={isPending}
-        />
-        <Input
-          id='email'
-          name='email'
-          placeholder='email'
-          onChange={handleChange}
-          disabled={isPending}
-        />
-        <Input
-          id='password'
-          name='password'
-          placeholder='password'
-          onChange={handleChange}
-          disabled={isPending}
-        />
-        <Input
-          id='repeatPassword'
-          name='repeatPassword'
-          placeholder='password'
-          onChange={handleChange}
-          disabled={isPending}
-        />
-        <Button type='submit' theme='dark' disabled={isPending}>
-          Sign up
-        </Button>
-      </form>
+    <>
+      <div className={styles.content}>
+        <h1 className={styles.title}>Hello! Register to get started</h1>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <Input
+            className={styles.name}
+            id='name'
+            name='name'
+            onChange={handleChange}
+            disabled={isPending}
+            label='Name'
+            radius='s'
+            size='m'
+            variant='faded'
+            fullWidth
+          />
+          <Input
+            className={styles.email}
+            id='email'
+            name='email'
+            onChange={handleChange}
+            disabled={isPending}
+            label='Email'
+            radius='s'
+            variant='faded'
+            fullWidth
+          />
+          <Input
+            className={styles.password}
+            id='password'
+            name='password'
+            type='password'
+            onChange={handleChange}
+            disabled={isPending}
+            label='Password'
+            radius='s'
+            variant='faded'
+            fullWidth
+          />
+          <Input
+            className={styles.repeatPassword}
+            id='repeatPassword'
+            name='repeatPassword'
+            type='password'
+            onChange={handleChange}
+            disabled={isPending}
+            label='Repeat password'
+            radius='s'
+            variant='faded'
+            fullWidth
+          />
+          <Button
+            className={styles.button}
+            type='submit'
+            variant='reversed'
+            size='l'
+            radius='s'
+            fullWidth
+            disabled={isPending}
+          >
+            Register
+          </Button>
+        </form>
 
-      {errors?.name && <div>{errors.name}</div>}
-      {errors?.email && <div>{errors.email}</div>}
-      {errors?.password && <div>{errors.password}</div>}
+        <div className={styles.socialsWrapper}>
+          <div className={styles.divider}>
+            <div className={styles.line} />
+            <div className={styles.text}>Or Register with</div>
+            <div className={styles.line} />
+          </div>
+          <div className={styles.socials}>
+            <Button variant='bordered' radius='s' className={styles.social}>
+              <IconFacebook />
+            </Button>
+            <Button variant='bordered' radius='s' className={styles.social}>
+              <IconGoogle />
+            </Button>
+            <Button variant='bordered' radius='s' className={styles.social}>
+              <IconApple />
+            </Button>
+          </div>
+        </div>
+      </div>
 
-      <Link href='/auth/login'>Already have an account</Link>
-    </div>
+      <div className={styles.register}>
+        <span>Already have an account? </span>
+        <UILink href='/auth/login' size='l' isUnderlined animated className={styles.link}>
+          Login Now
+        </UILink>
+      </div>
+    </>
   );
 };
 
