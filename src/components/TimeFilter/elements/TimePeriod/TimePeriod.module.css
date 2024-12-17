@@ -24,4 +24,8 @@
 
 .arrowRight {
   right: 8px;
+
+  &.isLastPeriod {
+    visibility: hidden;
+  }
 }

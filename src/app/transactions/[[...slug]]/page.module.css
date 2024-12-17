@@ -1,0 +1,20 @@
+.additional {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+}
+
+.container {
+  background: var(--color-background);
+  padding: var(--space-4) var(--space-2);
+  color: var(--color-foreground);
+}
+
+.list {
+  margin-top: var(--space-4);
+}

@@ -17,13 +17,17 @@ interface DateStoreState {
   selectPeriod: FilterId;
   selectDate: Dayjs;
   filtersByPeriod: IFilters[];
+  startDate: Dayjs;
+  endDate: Dayjs;
+  isLastPeriod: boolean;
 
+  updateDateRange: () => void;
   setSelectPeriod: (period: FilterId) => void;
   goToPreviousDate: () => void;
   goToNextDate: () => void;
 }
 
-const dateStore = create<DateStoreState>((set) => ({
+const dateStore = create<DateStoreState>((set, get) => ({
   selectPeriod: 'day',
   selectDate: dayjs(),
   filtersByPeriod: [
@@ -44,16 +48,71 @@ const dateStore = create<DateStoreState>((set) => ({
       label: 'Year',
     },
   ],
+  startDate: dayjs().startOf('day'),
+  endDate: dayjs().endOf('day'),
 
-  setSelectPeriod: (period: FilterId) => set({ selectPeriod: period }),
-  goToPreviousDate: () =>
+  get isLastPeriod() {
+    const { selectPeriod, selectDate } = get();
+    const today = dayjs();
+    switch (selectPeriod) {
+      case 'day':
+        return selectDate.isSame(today, 'day');
+      case 'week':
+        return selectDate.isSame(today, 'isoWeek');
+      case 'month':
+        return selectDate.isSame(today, 'month');
+      case 'year':
+        return selectDate.isSame(today, 'year');
+      default:
+        return false;
+    }
+  },
+
+  updateDateRange: () => {
+    const { selectDate, selectPeriod } = get();
+    let startDate: Dayjs;
+    let endDate: Dayjs;
+
+    switch (selectPeriod) {
+      case 'day':
+        startDate = selectDate.startOf('day');
+        endDate = selectDate.endOf('day');
+        break;
+      case 'week':
+        startDate = selectDate.startOf('isoWeek');
+        endDate = selectDate.endOf('isoWeek');
+        break;
+      case 'month':
+        startDate = selectDate.startOf('month');
+        endDate = selectDate.endOf('month');
+        break;
+      case 'year':
+        startDate = selectDate.startOf('year');
+        endDate = selectDate.endOf('year');
+        break;
+      default:
+        startDate = selectDate.startOf('day');
+        endDate = selectDate.endOf('day');
+    }
+
+    set({ startDate, endDate });
+  },
+  setSelectPeriod: (period: FilterId) => {
+    set({ selectPeriod: period });
+    get().updateDateRange();
+  },
+  goToPreviousDate: () => {
     set(({ selectPeriod, selectDate }) => {
       return { selectDate: selectDate.subtract(1, selectPeriod) };
-    }),
-  goToNextDate: () =>
+    });
+    get().updateDateRange();
+  },
+  goToNextDate: () => {
     set(({ selectPeriod, selectDate }) => {
       return { selectDate: selectDate.add(1, selectPeriod) };
-    }),
+    });
+    get().updateDateRange();
+  },
 }));
 
 export default dateStore;

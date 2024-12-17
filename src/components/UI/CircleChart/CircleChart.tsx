@@ -30,7 +30,7 @@ const CircleChart: FC<CircleChartProps> = ({ data }) => {
 
         const midPercent = cumulativePercent - percent / (2 * 100);
         const labelCoordinates = calculateCoordinates(midPercent * 100);
-        const labelX = labelCoordinates.x * 0.5; // Adjust the radius for label
+        const labelX = labelCoordinates.x * 0.5;
         const labelY = labelCoordinates.y * 0.5;
 
         return (

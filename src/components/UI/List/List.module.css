@@ -1,6 +1,56 @@
-.viewSplitted {
+.divider {
+  height: 1px;
+  background-color: var(--color-divider);
+}
+
+.viewDefault {
+  padding: 0 var(--space-2);
+
   .item {
-    margin-top: var(--space-3);
+    padding: var(--space-2) 0;
+  }
+}
+
+.viewBordered {
+  padding: 0 var(--space-4);
+
+  border: 2px solid var(--color-divider);
+  border-radius: 12px;
+
+  .item {
+    padding: var(--space-2) 0;
+  }
+}
+
+.viewSplitted {
+  padding: 0 var(--space-2);
+
+  .item {
+    padding: var(--space-2);
+    background-color: var(--color-default-50);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+    margin-top: var(--space-2);
+
+    border-radius: 12px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+.viewShadow {
+  padding: 0 var(--space-2);
+
+  background-color: var(--color-default-50);
+
+  border-radius: 12px;
+
+  .item {
+    padding: var(--space-2) 0;
+
+    border-radius: 12px;
 
     &:first-child {
       margin-top: 0;

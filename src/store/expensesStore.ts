@@ -5,6 +5,7 @@ import { create } from 'zustand';
 interface ExpensesStoreState {
   expenses: IExpense[];
   totalExpenses: number;
+  sort: 'date' | 'amount';
 
   setExpenses: (expenses: IExpense[]) => void;
   addExpense: (expense: IExpense) => void;
@@ -30,7 +31,7 @@ const expensesNew: IExpense[] = [
   },
   {
     id: '3',
-    categoryId: 'restaurant',
+    categoryId: 'restauraunt',
     date: '2024-11-27T20:45:00Z',
     amount: 120.75,
     originalAmount: {
@@ -43,6 +44,7 @@ const expensesNew: IExpense[] = [
 const expensesStore = create<ExpensesStoreState>((set) => ({
   expenses: [],
   totalExpenses: 0,
+  sort: 'date',
 
   setExpenses: (expenses: IExpense[]) =>
     set({ expenses: [...expensesNew], totalExpenses: getExpensesSum(expensesNew) }),

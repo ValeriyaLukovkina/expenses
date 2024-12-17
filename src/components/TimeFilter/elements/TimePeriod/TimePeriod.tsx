@@ -2,8 +2,8 @@ import { FC } from 'react';
 import cn from 'classnames';
 
 import dateStore from '@/store/dateStore';
-import styles from './TimePeriod.module.css';
 import IconArrow from '@/icons/IconArrow/IconArrow';
+import styles from './TimePeriod.module.css';
 
 interface TimePeriodProps {
   className?: string;
@@ -12,7 +12,7 @@ interface TimePeriodProps {
 const TimePeriod: FC<TimePeriodProps> = (props) => {
   const { className, ...restProps } = props;
 
-  const { selectPeriod, selectDate } = dateStore();
+  const { selectPeriod, selectDate, isLastPeriod } = dateStore();
   const goToPrevious = dateStore((state) => state.goToPreviousDate);
   const goToNext = dateStore((state) => state.goToNextDate);
 
@@ -39,10 +39,13 @@ const TimePeriod: FC<TimePeriodProps> = (props) => {
   };
 
   return (
-    <div className={cn(styles.timePeriod, className)}>
+    <div className={cn(styles.timePeriod, className)} {...restProps}>
       <IconArrow onClick={goToPrevious} className={cn(styles.arrow, styles.arrowLeft)} />
       <div className={styles.text}>{getFormattedPeriod()}</div>
-      <IconArrow onClick={goToNext} className={cn(styles.arrow, styles.arrowRight)} />
+      <IconArrow
+        onClick={goToNext}
+        className={cn(styles.arrow, styles.arrowRight, { [styles.isLastPeriod]: isLastPeriod })}
+      />
     </div>
   );
 };

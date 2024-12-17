@@ -41,6 +41,9 @@ const ExpensesForm: FC<ExpensesFormProps> = (props) => {
   const [errors, setErrors] = useState<Partial<Record<keyof ICategory, string>> | null>(null);
   const [isPending, startTransition] = useTransition();
 
+  const today = dayjs();
+  const yesterday = dayjs().subtract(1, 'day');
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (!/^\d*$/.test(value)) return;
@@ -61,11 +64,10 @@ const ExpensesForm: FC<ExpensesFormProps> = (props) => {
   const handleCloseCalendar = () => setShowCalendar(false);
 
   const setToday = () => {
-    setSelectedDate(dayjs());
+    setSelectedDate(today);
   };
 
   const setYesterday = () => {
-    const yesterday = dayjs().subtract(1, 'day');
     setSelectedDate(yesterday);
   };
 
@@ -119,7 +121,7 @@ const ExpensesForm: FC<ExpensesFormProps> = (props) => {
               <div onClick={() => handleSelectIcon(category.id)} key={category.id}>
                 <CategoryCard
                   iconId={category.iconId}
-                  active={id === selectCategories}
+                  active={category.id === selectCategories}
                   color={category.color}
                 />
               </div>
@@ -128,16 +130,23 @@ const ExpensesForm: FC<ExpensesFormProps> = (props) => {
         </div>
         <div className={styles.datesWrapper}>
           <div className={styles.title}>Date</div>
-          <div>
+          <div className={styles.datesContainer}>
             <div className={styles.dates}>
-              <Button onClick={setToday}>
-                {selectedDate.format('DD.MM')}
-                <div>Сегодня</div>
+              <Button onClick={setToday} radius='s' className={styles.date}>
+                <div className={styles.number}>{today.format('DD.MM')}</div>
+                <div className={styles.text}>Сегодня</div>
               </Button>
-              <Button onClick={setYesterday}>Вчера</Button>
+              <Button onClick={setYesterday} radius='s' className={styles.date}>
+                <div className={styles.number}>{yesterday.format('DD.MM')}</div>
+                <div className={styles.text}>Вчера</div>
+              </Button>
+              <Button onClick={setYesterday} radius='s' className={styles.date}>
+                <div className={styles.number}>{selectedDate.format('DD.MM')}</div>
+                <div className={styles.text}>Seleted</div>
+              </Button>
             </div>
-            <Button className={styles.openCalendar} onClick={handleOpenCalendar}>
-              <IconCalendar />
+            <Button className={styles.openCalendar} radius='s' onClick={handleOpenCalendar}>
+              <IconCalendar className={styles.icon}/>
             </Button>
           </div>
         </div>
@@ -145,7 +154,13 @@ const ExpensesForm: FC<ExpensesFormProps> = (props) => {
           {action === 'create' ? 'Create' : 'Save'}
         </Button>
       </form>
-      {showCalendar && <ModalCalendar onClose={handleCloseCalendar} selectedDate={selectedDate} onChangeDate={setSelectedDate} />}
+      {showCalendar && (
+        <ModalCalendar
+          onClose={handleCloseCalendar}
+          selectedDate={selectedDate}
+          onChangeDate={setSelectedDate}
+        />
+      )}
     </>
   );
 };

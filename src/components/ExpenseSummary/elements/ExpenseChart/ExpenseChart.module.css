@@ -1,3 +1,18 @@
 .timePeriod {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.emptyChart {
+  width: 200px;
+  height: 200px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--color-default-200);
+  border-radius: 50%;
+
+  font-size: var(--size-l);
 }

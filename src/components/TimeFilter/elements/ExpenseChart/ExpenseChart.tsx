@@ -11,7 +11,8 @@ import CircleChart from '@/components/UI/CircleChart/CircleChart';
 import styles from './ExpenseChart.module.css';
 
 import type { FC } from 'react';
-import type { ICategoryStats } from '@/app/_utils/calculateCategoryStats';
+import type { Dayjs } from 'dayjs';
+import type { ICategoryExpense } from '@/app/_utils/calculateCategoryStats';
 
 interface ExpenseChartProps {
   className?: string;
@@ -22,26 +23,43 @@ const ExpenseChart: FC<ExpenseChartProps> = (props) => {
 
   const { categories } = categoriesStore();
   const { expenses } = expensesStore();
-  const { selectPeriod, selectDate, startDate, endDate } = dateStore();
+  const { selectPeriod, selectDate } = dateStore();
 
-  const сategoryExpenses = useMemo((): ICategoryStats[] => {
+  const сategoryExpenses = useMemo((): ICategoryExpense[] => {
+    let startDate: Dayjs;
+    let endDate: Dayjs;
+
+    switch (selectPeriod) {
+      case 'day':
+        startDate = selectDate.startOf('day');
+        endDate = selectDate.endOf('day');
+        break;
+      case 'week':
+        startDate = selectDate.startOf('isoWeek');
+        endDate = selectDate.endOf('isoWeek');
+        break;
+      case 'month':
+        startDate = selectDate.startOf('month');
+        endDate = selectDate.endOf('month');
+        break;
+      case 'year':
+        startDate = selectDate.startOf('year');
+        endDate = selectDate.endOf('year');
+        break;
+      default:
+        startDate = selectDate.startOf('day');
+        endDate = selectDate.endOf('day');
+    }
+
     const filteredExpenses = filterExpensesByPeriod(expenses, startDate, endDate);
     const totalFilteredExpenses = getExpensesSum(filteredExpenses);
 
     return calculateCategoryStats(categories, filteredExpenses, totalFilteredExpenses);
-  }, [categories, expenses, selectDate, selectPeriod, startDate, endDate]);
-  console.log(сategoryExpenses);
-  debugger
+  }, [categories, expenses, selectDate, selectPeriod]);
 
   return (
     <div className={cn(styles.timePeriod, className)}>
-      {сategoryExpenses?.length > 0 ? (
-        <CircleChart data={сategoryExpenses} />
-      ) : (
-        <div className={styles.emptyChart}>
-          <div>No data</div>
-        </div>
-      )}
+      <CircleChart data={сategoryExpenses} />
     </div>
   );
 };
