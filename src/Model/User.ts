@@ -1,6 +1,39 @@
-import mongoose from 'mongoose';
+import { Schema, models, model } from 'mongoose';
 
-const CategorySchema = new mongoose.Schema({
+import type { Document } from 'mongoose';
+
+interface IOriginalAmount {
+  value: number;
+  currency: string;
+}
+
+interface ICategory extends Document {
+  id: string;
+  name: string;
+  iconId: string;
+  color: string;
+  limit?: number;
+}
+
+interface IExpense extends Document {
+  id: string;
+  categoryId: string;
+  date: string;
+  amount: number;
+  originalAmount?: IOriginalAmount;
+}
+
+interface IUser extends Document {
+  name: string;
+  email: string;
+  password?: string;
+  isActivated: boolean;
+  activationLink?: string;
+  categories: ICategory[];
+  expenses: IExpense[];
+}
+
+const CategorySchema = new Schema<ICategory>({
   id: { type: String, required: true },
   name: { type: String, required: true },
   iconId: { type: String },
@@ -8,7 +41,7 @@ const CategorySchema = new mongoose.Schema({
   limit: { type: Number },
 });
 
-const ExpenseSchema = new mongoose.Schema({
+const ExpenseSchema = new Schema<IExpense>({
   id: { type: String, required: true },
   categoryId: { type: String, required: true },
   date: { type: String, required: true },
@@ -19,12 +52,16 @@ const ExpenseSchema = new mongoose.Schema({
   },
 });
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema<IUser>({
   name: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
+  isActivated: { type: Boolean, default: false },
+  activationLink: { type: String },
   categories: [CategorySchema],
   expenses: [ExpenseSchema],
 });
 
-export default mongoose.models?.User || mongoose.model('User', UserSchema);
+const User = models.User || model('User', UserSchema);
+
+export default User;

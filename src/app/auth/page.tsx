@@ -12,7 +12,7 @@ const Auth = () => {
   }, [router]);
 
   const handleRegister = useCallback(() => {
-    router.push('/auth/signup');
+    router.push('/auth/registration');
   }, [router]);
 
   return (

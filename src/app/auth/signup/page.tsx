@@ -3,7 +3,6 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { SignupFormType, signup } from '@/app/actions/signup';
 import IconFacebook from '@/icons/IconFacebook/IconFacebook';
 import IconGoogle from '@/icons/IconGoogle/IconGoogle';
 import IconApple from '@/icons/IconApple/IconApple';
@@ -11,6 +10,7 @@ import Button from '@/components/UI/Button/Button';
 import Input from '@/components/UI/Input/Input';
 import UILink from '@/components/UI/UILink/UILink';
 import styles from './page.module.css';
+import { SignupFormType, registration } from '@/app/actions/registration';
 
 const Signup = () => {
   const router = useRouter(); 
@@ -34,14 +34,16 @@ const Signup = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setErrors({});
+    // setErrors({});
+
+    // registration(formData)
 
     startTransition(() => {
-      signup(formData).then((res) => {
+      registration(formData).then((res) => {
         if (res?.errors) {
           setErrors((prev) => ({ ...prev, ...res.errors }));
         } else {
-          router.push('/auth/login');
+          // router.push('/auth/login');
         }
       });
     });

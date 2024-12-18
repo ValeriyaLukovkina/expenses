@@ -12,6 +12,8 @@ export interface IUser {
 
 export interface IUserDB extends IUser {
   password?: string;
+  activationLink?: string;
+  isActivated?: boolean;
   categories: ICategory[];
   expenses: IExpense[];
 }

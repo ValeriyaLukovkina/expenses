@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { connectDB } from '@/lib/mongooseDB';
 import User from '@/Model/User';
 import { ensureSession } from '../_utils/ensureSession';
 
@@ -9,7 +8,6 @@ import type { IUserDB } from '@/types/Expenses';
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const session = await ensureSession();
-    await connectDB();
 
     if (!session.user?.email) {
       return NextResponse.json({ message: 'Email must not be null or undefined' }, { status: 400 });

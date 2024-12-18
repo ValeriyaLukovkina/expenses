@@ -22,23 +22,22 @@ export const login = async (formData: LoginFormType) => {
     return { errors: validationErrors };
   }
 
-  const { email, password } = validatedFields.data;
-
   try {
-    await connectDB();
+    const { email, password } = validatedFields.data;
 
-    await signIn('credentials', { email, password, redirect: false });
+    const response = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, password }),
+    });
 
-    return null;
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case 'CredentialsSignin':
-          return { errors: { error: 'Invalid credentials' } };
-        default:
-          return { errors: { error: 'Something went wrong' } };
-      }
+    if (response.ok) {
+      return {
+        errors: null,
+      };
     }
+  } catch (error) {
+    console.error('Error logging in:', error);
+
     return { errors: { error: 'Internal server error' } };
   }
 };

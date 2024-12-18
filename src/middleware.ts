@@ -26,17 +26,17 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  if (protectedNoRedirect.some((url) => pathname.startsWith(url.replace(':path*', '')))) {
-    if (!token) {
-      return NextResponse.json(
-        { message: 'Unauthorized' },
-        {
-          status: 401,
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-    }
-  }
+  // if (protectedNoRedirect.some((url) => pathname.startsWith(url.replace(':path*', ''))) && pathname !== '/api/registration') {
+  //   if (!token) {
+  //     return NextResponse.json(
+  //       { message: 'Unauthorized' },
+  //       {
+  //         status: 401,
+  //         headers: { 'Content-Type': 'application/json' },
+  //       },
+  //     );
+  //   }
+  // }
 
   return NextResponse.next();
 }
