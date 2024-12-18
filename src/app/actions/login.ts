@@ -4,10 +4,6 @@ import * as z from 'zod';
 
 import { LoginSchema } from '@/Schemas';
 
-import { signIn } from '@/auth';
-import { AuthError } from 'next-auth';
-import { connectDB } from '@/lib/mongooseDB';
-
 export type LoginFormType = z.infer<typeof LoginSchema>;
 
 export const login = async (formData: LoginFormType) => {
@@ -27,7 +23,7 @@ export const login = async (formData: LoginFormType) => {
 
     const response = await fetch('http://localhost:3000/api/login', {
       method: 'POST',
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ email, password }),
     });
 
     if (response.ok) {

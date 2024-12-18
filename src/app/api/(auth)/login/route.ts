@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import bcrypt from 'bcrypt';
-import * as uuid from 'uuid';
 
 import { generateToken, saveToken } from '../../_utils/token';
 import User from '@/Model/User';
 
 import type { IDto } from '../../_utils/token';
-import { sendActivationMail } from '../../_utils/sendActivationMail';
 import { ValidationError } from '../../_utils/validationError';
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -22,29 +20,20 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const existingUser = await User.findOne({ email });
 
-    if (existingUser) {
-      throw new ValidationError('User already exists', 409);
+    if (!existingUser) {
+      throw new ValidationError('User not found', 400);
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const activationLink = uuid.v4();
-
-    const user = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-      activationLink,
-      categories: defaultCategories,
-      expenses: [],
-    });
-
-    await sendActivationMail(email, `${process.env.BASE_URL}/api/activate?link=${activationLink}`);
+    const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+    if (!isPasswordValid) {
+      throw new ValidationError('Invalid password', 400);
+    }
 
     const userDto: IDto = {
-      name: user.name,
-      email: user.email,
-      id: user._id.toString(),
-      isActivated: user.isActivated,
+      name: existingUser.name,
+      email: existingUser.email,
+      id: existingUser._id.toString(),
+      isActivated: existingUser.isActivated,
     };
 
     const tokens = generateToken(userDto);
